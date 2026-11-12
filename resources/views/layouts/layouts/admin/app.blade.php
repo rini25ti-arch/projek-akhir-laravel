@@ -37,7 +37,7 @@
 
     <!-- Start CSS -->
     <!-- Volt CSS -->
-    @include('layouts.admin.css')
+    @include('layouts.layouts.admin.css')
     <!-- End CSS -->
 
 </head>
@@ -45,13 +45,13 @@
 <body>
 
     <!-- Start sidebar-->
-    @include('layouts.admin.sidebar')
+    @include('layouts.layouts.admin.sidebar')
     <!-- End sidebar-->
 
     <main class="content">
 
         <!-- Start header-->
-        @include('layouts.admin.header')
+        @include('layouts.layouts.admin.header')
         <!-- End header-->
 
         <!-- Start main content -->
@@ -59,12 +59,12 @@
         <!-- End main content -->
 
         <!-- Start footer -->
-        @include('layouts.admin.footer')
+        @include('layouts.layouts.admin.footer')
         <!-- End footer -->
     </main>
 
     <!-- Start JS -->
-    @include('layouts.admin.js')
+    @include('layouts.layouts.admin.js')
     <!-- End JS -->
 </body>
 
