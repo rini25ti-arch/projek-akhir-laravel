@@ -7,9 +7,17 @@ use Illuminate\Http\Request;
 
 class PelangganController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $pelanggan = Pelanggan::latest()->get();
+        $filterableColumns = ['gender'];
+        $searchableColumns = ['first_name', 'last_name', 'email'];
+
+        $pelanggan = Pelanggan::filter($request, $filterableColumns)
+            ->search($request, $searchableColumns)
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
+
         return view('admin.admin.pelanggan.index', compact('pelanggan'));
     }
 
@@ -21,10 +29,12 @@ class PelangganController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama'   => 'required',
-            'email'  => 'required|email|unique:pelanggans,email',
-            'no_hp'  => 'required',
-            'alamat' => 'required',
+            'first_name' => 'required',
+            'last_name'  => 'required',
+            'birthday'   => 'nullable|date',
+            'gender'     => 'nullable|in:Male,Female,Other',
+            'email'      => 'required|email|unique:pelanggan,email',
+            'phone'      => 'nullable',
         ]);
 
         Pelanggan::create($request->all());
@@ -40,10 +50,12 @@ class PelangganController extends Controller
     public function update(Request $request, Pelanggan $pelanggan)
     {
         $request->validate([
-            'nama'   => 'required',
-            'email'  => 'required|email|unique:pelanggans,email,'.$pelanggan->id,
-            'no_hp'  => 'required',
-            'alamat' => 'required',
+            'first_name' => 'required',
+            'last_name'  => 'required',
+            'birthday'   => 'nullable|date',
+            'gender'     => 'nullable|in:Male,Female,Other',
+            'email'      => 'required|email|unique:pelanggan,email,' . $pelanggan->id,
+            'phone'      => 'nullable',
         ]);
 
         $pelanggan->update($request->all());
